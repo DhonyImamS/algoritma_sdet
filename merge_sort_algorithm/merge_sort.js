@@ -27,6 +27,16 @@ function atomicElementSort(arr1, arr2) {
     return memorizeArray;
 }
 
+// in case you need recursive pattern
+const mergeSort = arr => {
+    if (arr.length < 2){
+       return arr;
+    }
+    const middle = Math.floor(arr.length / 2);
+    const left = arr.slice(0, middle), right = arr.slice(middle, arr.length);
+    return atomicElementSort(mergeSort(left), mergeSort(right));
+ };
+
 function sortArrayWithRemoveDuplicates(inputArr) {
     let sortedResult = [];
     let array1 = [];
@@ -59,3 +69,5 @@ function sortArrayWithRemoveDuplicates(inputArr) {
 }
 
 sortArrayWithRemoveDuplicates([9, 9, 9, 8, 6, 6, 3, 81, 8, 2, 1, 5, 19])
+
+console.log(mergeSort([23, 4, 67, 32, 1, 7, 56, 5, 89]));
