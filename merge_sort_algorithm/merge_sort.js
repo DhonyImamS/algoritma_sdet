@@ -15,10 +15,10 @@ function atomicElementSort(arr1, arr2) {
             } else if (arr2[pointer2] === undefined) {
                 memorizeArray.push(arr1[pointer1]);
                 pointer1++;
-            } else if (arr1[pointer1] <= arr2[pointer2]) {
+            } else if (parseInt(arr1[pointer1]) <= parseInt(arr2[pointer2])) {
                 memorizeArray.push(arr1[pointer1]);
                 pointer1++;
-            } else if (arr1[pointer1] > arr2[pointer2]) {
+            } else if (parseInt(arr1[pointer1]) > parseInt(arr2[pointer2])) {
                 memorizeArray.push(arr2[pointer2]);
                 pointer2++;
             }
