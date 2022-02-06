@@ -1,3 +1,4 @@
+const fs = require('fs');
 function atomicElementSort(arr1, arr2) {
     let memorizeArray = [];
     let pointer1 = 0;
@@ -37,7 +38,8 @@ const mergeSort = arr => {
     return atomicElementSort(mergeSort(left), mergeSort(right));
  };
 
-function sortArrayWithRemoveDuplicates(inputArr) {
+ // sorted for traditional way
+const sortArrayWithRemoveDuplicates = inputArr => {
     let sortedResult = [];
     let array1 = [];
     let array2 = [];
@@ -68,6 +70,22 @@ function sortArrayWithRemoveDuplicates(inputArr) {
     console.log(sortedResult);
 }
 
-sortArrayWithRemoveDuplicates([9, 9, 9, 8, 6, 6, 3, 81, 8, 2, 1, 5, 19])
+function mergeSortBigData() {
+    fs.readFile('./input.txt', 'utf8', (err, data) => {
+        const inputBigArray = data.split('\n');
+        const output = mergeSort(inputBigArray);
+        console.log(output);
 
-console.log(mergeSort([23, 4, 67, 32, 1, 7, 56, 5, 89]));
+        const file = fs.createWriteStream('output.txt');
+        output.forEach( dataElement => {
+            file.write(dataElement + '\n');
+        });
+        file.end();
+    });
+}
+
+// sortArrayWithRemoveDuplicates([9, 9, 9, 8, 6, 6, 3, 81, 8, 2, 1, 5, 19])
+
+// mergeSort([23, 4, 67, 32, 1, 7, 56, 5, 89]);
+
+// mergeSortBigData();
