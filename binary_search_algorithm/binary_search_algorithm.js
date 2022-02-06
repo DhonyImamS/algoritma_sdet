@@ -3,9 +3,7 @@
 */
 
 function binarySearch(arrayInput, searchValue) {
-    let startReference = 0;
-    let endReference = arrayInput.length - 1;
-    let medianReference;
+    let startReference = 0, medianReference = 0, endReference = arrayInput.length - 1;
     let isSearching = true;
     let foundingIndex = 'Not Found';;
 
