@@ -29,6 +29,42 @@ function buatSegitigaAsterik(n) {
     }
 }
 
+function cetakSegitigaNumberSimetric(banyakDicetak) {
+    const lineAsterikRow = [];
+    const panjangAsteriks = banyakDicetak + ( banyakDicetak + 1);
+    const eachIndexMedian = Math.floor(( panjangAsteriks ) / 2);
+    
+
+    for(let index = 0; index < panjangAsteriks; index++) {
+        lineAsterikRow.push(' ');
+    }
+    
+    for(let index = 0; index < banyakDicetak; index++) {
+        let counter = 1;
+        
+        lineAsterikRow[eachIndexMedian] = `${index + 1}`;
+        
+        for(let idx = eachIndexMedian-index; idx < eachIndexMedian; idx++) {
+            
+            lineAsterikRow[idx] = counter;
+            counter ++;
+            
+        }
+        
+        counter = 1;
+        for(let idx = eachIndexMedian+index; idx > eachIndexMedian; idx--) {
+            
+            lineAsterikRow[idx] = counter;
+            counter ++;
+            
+        }
+        
+        console.log(lineAsterikRow.join(' ').toString());
+    }
+}
+
 buatSegitigaAsterik(10);
 
 cetakSegitigaSimetris(10);
+
+cetakSegitigaNumberSimetric(10)
