@@ -31,12 +31,12 @@ function atomicElementSort(arr1, arr2) {
 // in case you need recursive pattern
 const mergeSort = arr => {
     if (arr.length < 2){
-       return arr;
+        return arr;
     }
     const middle = Math.floor(arr.length / 2);
     const left = arr.slice(0, middle), right = arr.slice(middle, arr.length);
     return atomicElementSort(mergeSort(left), mergeSort(right));
- };
+};
 
  // sorted for traditional way
 const sortArrayWithRemoveDuplicates = inputArr => {
