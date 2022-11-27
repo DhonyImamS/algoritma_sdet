@@ -27,6 +27,12 @@ function merge(arr1, arr2) {
             
             resultMerge.push(arr2[rightPointer]);
             rightPointer++;
+        } else if (arr1[leftPointer] === arr2[rightPointer] && (arr1[leftPointer] && arr2[rightPointer])) {
+            
+            resultMerge.push(arr1[leftPointer]);
+            resultMerge.push(arr2[rightPointer]);
+            rightPointer++;
+            leftPointer++;
         }
         
     }

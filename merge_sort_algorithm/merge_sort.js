@@ -22,6 +22,11 @@ function atomicElementSort(arr1, arr2) {
             } else if (parseInt(arr1[pointer1]) > parseInt(arr2[pointer2])) {
                 memorizeArray.push(arr2[pointer2]);
                 pointer2++;
+            } else if (arr1[leftPointer] === arr2[rightPointer] && (arr1[leftPointer] && arr2[rightPointer])) {
+                memorizeArray.push(arr1[leftPointer]);
+                memorizeArray.push(arr2[rightPointer]);
+                pointer2++;
+                pointer1++;
             }
         }
     }
