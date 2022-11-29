@@ -12,8 +12,6 @@ class BinarySearchTree {
 
     insertValue(val, direction) {
 
-        // if (!this._reference) this._reference = this;
-
         switch (direction) {
             case 'right':
                 this._reference = this._rightChild;
@@ -33,7 +31,6 @@ class BinarySearchTree {
                 this._reference._rightChild = new BinarySearchTree(val);
                 this._reference._heightBranch++;
             } else { 
-                // this._reference = this._rightChild;
                 this._reference.insertValue(val, 'right');
             }
         }
@@ -45,7 +42,6 @@ class BinarySearchTree {
                 this._reference._leftChild = new BinarySearchTree(val);
                 this._reference._heightBranch++;
             } else { 
-                // this._reference = this._leftChild;
                 this._reference.insertValue(val, 'left');
             }
         }
