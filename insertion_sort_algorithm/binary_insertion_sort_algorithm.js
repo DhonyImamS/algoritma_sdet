@@ -22,7 +22,7 @@ function binarySearchForIndexTobeInserted(inputArr, searchValue) {
             
         } else if (searchValue === inputArr[medianSortedArrIndex]) {
         
-            insertedTargetIndex = null;
+            insertedTargetIndex = medianSortedArrIndex - 1;
             searchProcess = false;
         
         } else if (searchValue > inputArr[medianSortedArrIndex] && searchValue < inputArr[medianSortedArrIndex+1]) {
@@ -32,13 +32,11 @@ function binarySearchForIndexTobeInserted(inputArr, searchValue) {
         
         } else if (searchValue < inputArr[medianSortedArrIndex] ) {
 
-            startIndex = 0;
             endingIndex = medianSortedArrIndex - 1;
             
         } else if (searchValue > inputArr[medianSortedArrIndex] ) {
 
             startIndex = medianSortedArrIndex + 1;
-            endingIndex = inputArr.length - 1;
             
         }
         
@@ -55,6 +53,7 @@ function insertionSort(unsortArr) {
     sortedArr.push(unsortArr[0]);
     
     for (let index = 1; index < unsortArr.length; index++) {
+        let array1, array2;
 
         // set the reference from sortedArr
         let targetInsertedIndex = binarySearchForIndexTobeInserted(sortedArr,unsortArr[index]);
@@ -70,9 +69,17 @@ function insertionSort(unsortArr) {
         
         
         if (unsortArr[index] >= valueRef) {
-            sortedArr.splice(idxRef + 1, 0, unsortArr[index]);
+            
+            array1 = sortedArr.slice(0, idxRef + 1);
+            array2 = sortedArr.slice(idxRef + 1, sortedArr.length);
+
+            sortedArr = array1.concat(unsortArr[index]).concat(array2);
         } else {
-            sortedArr.splice(idxRef, 0, unsortArr[index]);
+            
+            array1 = sortedArr.slice(0, idxRef);
+            array2 = sortedArr.slice(idxRef, sortedArr.length);
+
+            sortedArr = array1.concat(unsortArr[index]).concat(array2);
         }
         
     }
@@ -86,7 +93,7 @@ function insertionSort(unsortArr) {
 
 // const result = binarySearchForIndexTobeInserted(inputArr,9)
 
-const inputArr = [24, 13, 99, 72, 2000, 61, 6, 75, 1, 7, 68, 42, 39, 20, 19];
+const inputArr = [1, 1, 2, 1, 2,  1, 2,  1, 2,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2,  1, 1, 1, 2,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 10000, 24, 7599, 13, 10000, 99, 72, 2000, 61, 6, 75, 7, 1, 7, 68, 42, 39, 20, 19,7];
 
 const result = insertionSort(inputArr)
 
