@@ -63,22 +63,22 @@ function closestNumbers(arrInput) {
     let minimumValue = 0;
     let deltaValue;
     
-    for(let index = 0; index < arr.length; index++) {
-        for(let index2 = index + 1; index2 < arr.length; index2++) {
-            deltaValue = Math.abs(arr[index] - arr[index2]);
-            
-            if (index2 === 1) minimumValue = deltaValue;
-            
-            if (deltaValue < minimumValue) {
-                arrClosest = [];
-                minimumValue = deltaValue;
+    for(let index = 0; index < arr.length - 1; index++) {
+        let nextIndex = index+1;
+        
+        deltaValue = Math.abs(arr[index] - arr[nextIndex]);
+        
+        if (index === 0) minimumValue = deltaValue;
+        
+        if (deltaValue < minimumValue) {
+            arrClosest = [];
+            minimumValue = deltaValue;
                 
-                arrClosest.push(arr[index]);
-                arrClosest.push(arr[index2]);
-            } else if (deltaValue === minimumValue) {
-                arrClosest.push(arr[index]);
-                arrClosest.push(arr[index2]);
-            }
+            arrClosest.push(arr[index]);
+            arrClosest.push(arr[nextIndex]);
+        } else if (deltaValue === minimumValue) {
+            arrClosest.push(arr[index]);
+            arrClosest.push(arr[nextIndex]);
         }
     }
     
