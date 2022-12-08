@@ -76,12 +76,16 @@ const sortArrayWithRemoveDuplicates = inputArr => {
 }
 
 function mergeSortBigData() {
-    fs.readFile('./input.txt', 'utf8', (err, data) => {
-        const inputBigArray = data.split('\n');
+    fs.readFile('./sorting_algorithm/merge_sort_algorithm/input.txt', 'utf8', (err, data) => {
+        const inputBigArray = data.split(' ');
         const output = mergeSort(inputBigArray);
+        const medianIndex = Math.floor(output.length / 2);
+
+        console.log(medianIndex);
+        console.log(output[medianIndex]);
         console.log(output);
 
-        const file = fs.createWriteStream('output.txt');
+        const file = fs.createWriteStream('./sorting_algorithm/merge_sort_algorithm/output.txt');
         output.forEach( dataElement => {
             file.write(dataElement + '\n');
         });
@@ -93,4 +97,4 @@ function mergeSortBigData() {
 
 // mergeSort([23, 4, 67, 32, 1, 7, 56, 5, 89]);
 
-// mergeSortBigData();
+mergeSortBigData();
