@@ -1,59 +1,64 @@
-function isArrSortedAsc(arrInput) {
+function binarySearchForIndexTobeInserted(inputArr, searchValue) {
+    let insertedTargetIndex = null;
+    let startIndex = 0;
+    let endingIndex = inputArr.length - 1;
     
-    let sortedArr = [...arrInput];
-    let isSorted = false;
+    let searchProcess = true;
+    
+    while(searchProcess) {
 
-    sortedArr.sort((a,b) => a-b);
+        let medianSortedArrIndex = Math.floor((startIndex + endingIndex) / 2);
+        
+        // searching process
+        if (searchValue > inputArr[endingIndex]) {
 
-    console.log('====>', arrInput);
-    console.log('====>', sortedArr);
-    
-    if (sortedArr.join('') === arrInput.join('')) isSorted = true;
-    
-    return isSorted;
+            insertedTargetIndex = endingIndex;
+            searchProcess = false;
+
+        } else if (searchValue <= inputArr[startIndex]) {
+
+            insertedTargetIndex = startIndex;
+            searchProcess = false;
+            
+        } else if (searchValue === inputArr[medianSortedArrIndex]) {
+        
+            insertedTargetIndex = medianSortedArrIndex - 1;
+            searchProcess = false;
+        
+        } else if (searchValue > inputArr[medianSortedArrIndex] && searchValue < inputArr[medianSortedArrIndex+1]) {
+            
+            insertedTargetIndex = medianSortedArrIndex;
+            searchProcess = false;
+        
+        } else if (searchValue < inputArr[medianSortedArrIndex] ) {
+
+            endingIndex = medianSortedArrIndex - 1;
+            
+        } else if (searchValue > inputArr[medianSortedArrIndex] ) {
+
+            startIndex = medianSortedArrIndex + 1;
+            
+        }
+        
+    }
+
+    return insertedTargetIndex;
 }
 
-function getIndexInsrtAndShiftVal(sortedArr, valueTobeInsert) {
-    let insertedIndex = null;
-    let shiftVal = 0;
-    let lastIndex = sortedArr.length - 1;
-
-    if (sortedArr.length === 1) {
-        insertedIndex = 0;
-        if (valueTobeInsert < sortedArr[0]) shiftVal++;
-
-        return {
-            shiftValue: shiftVal,
-            indexInsert: insertedIndex
-        }
+function countSwap(sortedArr, indexInsert, valueToBeInsert) {
+    const lengthArr = sortedArr.length;
+    const lastIndex = lengthArr - 1;
+    const refValue = sortedArr[indexInsert];
+    
+    let swapTimes = 0;
+    
+    if ( valueToBeInsert >= refValue ) {
+        swapTimes = lastIndex - indexInsert;
+    } else if ( valueToBeInsert < refValue ) {
+        swapTimes = lastIndex - indexInsert + 1;
     }
     
-    for(let index = lastIndex; index >= 0; index--) {
-        let valueRef = sortedArr[index];
-
-        if (valueTobeInsert >= valueRef) {
-            insertedIndex = index;
-
-            index = -1;
-
-            return {
-                shiftValue: shiftVal,
-                indexInsert: insertedIndex
-            }
-        } else if (valueTobeInsert < valueRef && index === 0) {
-            insertedIndex = index;
-            shiftVal++;
-
-            index = -1;
-
-            return {
-                shiftValue: shiftVal,
-                indexInsert: insertedIndex
-            }
-        }
-
-        shiftVal++;
-    }
+    return swapTimes;
 }
 
 function insertValueToArr(sortedArr, indexInsert, value) {
@@ -87,30 +92,29 @@ function insertValueToArr(sortedArr, indexInsert, value) {
 
 function insertionSort(arr) {
     // Write your code here
-    let tempShift = [];
     let sortedArr = [];
-
-    // if(isArrSortedAsc(arr)) return 0;
+    let timeSwap = 0;
     
     sortedArr.push(arr[0]);
     
     for (let idx = 1; idx < arr.length; idx++) {
-        const { shiftValue, indexInsert } = getIndexInsrtAndShiftVal(sortedArr, arr[idx]);
+
+        const indexInsert = binarySearchForIndexTobeInserted(sortedArr, arr[idx])
+        const shiftValue = countSwap(sortedArr, indexInsert, arr[idx])
         
         sortedArr = insertValueToArr(sortedArr, indexInsert, arr[idx])
-        tempShift.push(shiftValue);
+        timeSwap = timeSwap + shiftValue;
 
-        console.log(sortedArr);
-        console.log(tempShift);
+        // console.log(sortedArr);
+        // console.log(tempShift);
     }
     
+    if (JSON.stringify(sortedArr) === JSON.stringify(arr)) return 0;
     
-    const amountShift = tempShift.reduce((val1, val2) => val1 + val2);
-    
-    return amountShift;
+    return timeSwap;
 }
 
-console.log(insertionSort([1,  5,  6, 11,12, 14, 15]))
+console.log(insertionSort([5,  1,  6, 11,12, 14, 15]))
 
 
 // 2,1, 3, 1, 2
