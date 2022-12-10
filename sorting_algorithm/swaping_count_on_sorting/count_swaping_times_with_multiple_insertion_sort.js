@@ -83,6 +83,59 @@ function insertValueToArr(sortedArr, indexInsert, value) {
     return resultArr;
 }
 
+function devideInsertionSortProcess(unsortArr) {
+    
+    const medianIndex = Math.floor(unsortArr.length / 2);
+
+    const arr1 = unsortArr.slice(0, medianIndex), arr2 = unsortArr.slice(medianIndex, unsortArr.length);
+
+    return [arr1, arr2];
+}
+
+function merge(arr1, arr2) {
+    
+    // console.log(arr1 + ' -------- ' + arr2)
+    
+    const resultMerge = [];
+    let lengthRecursive = arr1.length + arr2.length;
+    let leftPointer = 0;
+    let rightPointer = 0;
+    
+    for (let index = 0; index < lengthRecursive; index++) {
+        
+        // console.log(leftPointer + ' -------- ' + rightPointer)
+        if (leftPointer !== arr1.length || rightPointer !== arr2.length) {
+            if (arr1[leftPointer] === undefined) {
+            
+                resultMerge.push(arr2[rightPointer]);
+                rightPointer++;
+            } else if (arr2[rightPointer] === undefined) {
+                
+                resultMerge.push(arr1[leftPointer]);
+                leftPointer++;
+            } else if (parseInt(arr1[leftPointer]) < parseInt(arr2[rightPointer])) {
+                
+                resultMerge.push(arr1[leftPointer]);
+                leftPointer++;
+            } else if (parseInt(arr1[leftPointer]) > parseInt(arr2[rightPointer])) {
+                
+                resultMerge.push(arr2[rightPointer]);
+                rightPointer++;
+            } else if (arr1[leftPointer] === arr2[rightPointer] && (arr1[leftPointer] && arr2[rightPointer])) {
+                
+                resultMerge.push(arr1[leftPointer]);
+                resultMerge.push(arr2[rightPointer]);
+                rightPointer++;
+                leftPointer++;
+            }
+        }
+        
+    }
+    
+    return resultMerge;
+    
+}
+
 /*
  * Complete the 'insertionSort' function below.
  *
@@ -94,6 +147,8 @@ function insertionSort(arr) {
     // Write your code here
     let sortedArr = [];
     let timeSwap = 0;
+
+    if (arr.length === 0) return sortedArr;
     
     sortedArr.push(arr[0]);
     
@@ -109,18 +164,48 @@ function insertionSort(arr) {
         // console.log(tempShift);
     }
     
-    if (JSON.stringify(sortedArr) === JSON.stringify(arr)) return 0;
+    // if (JSON.stringify(sortedArr) === JSON.stringify(arr)) return 0;
+
+    // return timeSwap;
     
-    return timeSwap;
+    return sortedArr;
 }
 
-console.log(insertionSort([5,  1,  6, 11,12, 14, 15]))
+
+function process_start(arr) {
+    let sortArrLeft;
+    let sortArrRight;
+
+    if (arr.length < 2) return arr;
+
+    console.log('======== process ======== ', arr);
+
+    const [arrLeft, arrRight] = devideInsertionSortProcess(arr);
+
+    console.log(arrLeft, " ========== ", arrRight);
+
+    sortArrLeft = insertionSort(arrLeft);
+
+    sortArrRight = insertionSort(arrRight);
+
+    console.log(sortArrLeft, " +++++++++++ ", sortArrRight);
+
+    let resultArr = merge(process_start(sortArrLeft), process_start(sortArrRight));
+
+    return resultArr;
+}
+
+console.log(process_start([5,  1,  6, 11, 14, 15, 12]))
+
+// console.log(insertionSort([5,  1,  6, 11,12, 14, 15]))
 
 
 // 2,1, 3, 1, 2
 
 // 1 2 3 1 2 --> 1
 
-// 1 1 2 3 2 --> 3
+// 1 1 2 3 2 --> 2
 
 // 1 1 2 2 3 --> 1
+
+// 2,1, 3,    1, 2
