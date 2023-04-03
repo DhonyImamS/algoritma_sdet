@@ -24,7 +24,7 @@ function findingLongestPalindrome(str) {
         let predictNextWord = undefined;
         let predictNextWord2 = undefined;
         
-        for(let pickerChar = 1; pickerChar <= lastIndex; pickerChar++) {
+        for(let pickerChar = index + 1; pickerChar <= lastIndex; pickerChar++) {
             const endPick = pickerChar + 1;
             let mergeArr;
             
@@ -52,4 +52,4 @@ function findingLongestPalindrome(str) {
     console.log(result[arrayMaxLength])
 }
 
-findingLongestPalindrome('ana')
+findingLongestPalindrome('hellomynameisannasmith')
