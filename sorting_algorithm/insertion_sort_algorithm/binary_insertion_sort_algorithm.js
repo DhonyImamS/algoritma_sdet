@@ -1,90 +1,65 @@
-function binarySearchForIndexTobeInserted(inputArr, searchValue) {
-    let insertedTargetIndex = null;
+function searchInsertedIndex(arrayData, value) {
+    const lengthData = arrayData.length;
     let startIndex = 0;
-    let endingIndex = inputArr.length - 1;
+    let lastIndex = lengthData - 1;
     
-    let searchProcess = true;
+    let startingSearch = true;
+    let foundIndex;
     
-    while(searchProcess) {
-
-        let medianSortedArrIndex = Math.floor((startIndex + endingIndex) / 2);
+    while (startingSearch) {
         
-        // searching process
-        if (searchValue > inputArr[endingIndex]) {
-
-            insertedTargetIndex = endingIndex;
-            searchProcess = false;
-
-        } else if (searchValue < inputArr[startIndex]) {
-
-            insertedTargetIndex = startIndex;
-            searchProcess = false;
-            
-        } else if (searchValue === inputArr[medianSortedArrIndex]) {
+        let medianIndex = Math.floor((lastIndex + startIndex) / 2);
         
-            insertedTargetIndex = medianSortedArrIndex - 1;
-            searchProcess = false;
-        
-        } else if (searchValue > inputArr[medianSortedArrIndex] && searchValue < inputArr[medianSortedArrIndex+1]) {
-            
-            insertedTargetIndex = medianSortedArrIndex;
-            searchProcess = false;
-        
-        } else if (searchValue < inputArr[medianSortedArrIndex] ) {
-
-            endingIndex = medianSortedArrIndex - 1;
-            
-        } else if (searchValue > inputArr[medianSortedArrIndex] ) {
-
-            startIndex = medianSortedArrIndex + 1;
-            
+        if ( value === arrayData[medianIndex] ) {
+            startingSearch = false;
+            foundIndex = medianIndex;
+        } else if ( value > arrayData[medianIndex] && value < arrayData[medianIndex + 1]) {
+            startingSearch = false;
+            foundIndex = medianIndex;
+        } else if ( value < arrayData[medianIndex] && value > arrayData[medianIndex - 1]) {
+            startingSearch = false;
+            foundIndex = medianIndex - 1;
+        } else if ( value > arrayData[medianIndex] && medianIndex === lastIndex) {
+            startingSearch = false;
+            foundIndex = medianIndex + 1;
+        } else if ( value < arrayData[medianIndex] && medianIndex === startIndex) {
+            startingSearch = false;
+            foundIndex = medianIndex - 1;
+        } else if ( value > arrayData[medianIndex] && medianIndex < lastIndex) {
+            startIndex = medianIndex + 1;
+        } else if ( value < arrayData[medianIndex] && medianIndex > startIndex) {
+            lastIndex = medianIndex - 1;
         }
-        
     }
-    
-    return insertedTargetIndex;
+
+    return foundIndex;
 }
+// console.log(searchInsertedIndex([1, 2, 3, 8, 10], 4))
 
-// insertion sort with input unsort no duplicate value
-function insertionSort(unsortArr) {
-    let sortedArr = [];
-    let reference = {};
-    
-    sortedArr.push(unsortArr[0]);
-    
-    for (let index = 1; index < unsortArr.length; index++) {
-        let array1, array2;
+function insertionSort(arrayData) {
+    let insertedArr = [arrayData[0]];
 
-        // set the reference from sortedArr
-        let targetInsertedIndex = binarySearchForIndexTobeInserted(sortedArr,unsortArr[index]);
-
-        if (targetInsertedIndex != null) {
-            reference = {
-                idxRef: targetInsertedIndex,
-                valueRef: sortedArr[targetInsertedIndex]
-            };
-        }
+    for ( let index = 1; index < arrayData.length; index++ ) {
         
-        const { idxRef, valueRef } = reference;
+        let sortedArr = [];
+        let dataPushed = arrayData[index];
+        let insertedIndex = searchInsertedIndex(insertedArr, dataPushed);
         
+        sortedArr.push(dataPushed);
         
-        if (unsortArr[index] >= valueRef) {
-            
-            array1 = sortedArr.slice(0, idxRef + 1);
-            array2 = sortedArr.slice(idxRef + 1, sortedArr.length);
-
-            sortedArr = array1.concat(unsortArr[index]).concat(array2);
+        if ( insertedIndex < 0 ) {
+            sortedArr = sortedArr.concat(insertedArr);
+        } else if ( insertedIndex >= insertedArr.length ) {
+            sortedArr = insertedArr.concat(sortedArr);
         } else {
-            
-            array1 = sortedArr.slice(0, idxRef);
-            array2 = sortedArr.slice(idxRef, sortedArr.length);
-
-            sortedArr = array1.concat(unsortArr[index]).concat(array2);
+            sortedArr = insertedArr.slice(0, insertedIndex+1).concat(sortedArr, insertedArr.slice(insertedIndex+1, insertedArr.length));
         }
+        
+        insertedArr = [...sortedArr];
         
     }
     
-    return sortedArr;
+    return insertedArr;
     
 }
 
