@@ -2,33 +2,35 @@ package main
 
 import "fmt"
 
-type Memorize struct {
-	Min int
-	Max int
-}
+// fibonacci adalah sebuah fungsi yang mengembalikan sebuah fungsi yang
+// mengembalikan sebuah integer.
 
-// fibonacci adalah sebuah fungsi yang mengembalikan sebuah fungsi yang mengembalikan sebuah integer.
-func fibonacci() func(int, *Memorize) int {
-	return func(index int, ctx *Memorize) int {
-		result := 0
+func fibonacci() func() int {
+	intNums := [2]int{0, 0}
+	numShift := 0
+	
+	return func() int {
 		
-		if index < 2 {
-			result = index
-		} else { 
-			result = ctx.Min + ctx.Max
-			//Swap Memorize
-			ctx.Min = ctx.Max
-			ctx.Max = result
+		if numShift == 1 {
+			intNums[1] = 1
+		}
+			
+		newVal := intNums[0] + intNums[1]
+		
+		if numShift != 1 {
+			intNums[0], intNums[1] = intNums[1], newVal // Swap values
 		}
 		
-		return result
+		numShift += 1;
+
+		return newVal
 	}
 }
 
 func main() {
-	context := &Memorize{0,1}
-	f := fibonacci()
+	f := fibonacci();
+	
 	for i := 0; i < 10; i++ {
-		fmt.Println(f(i, context))
+		fmt.Println(f())
 	}
 }
