@@ -1,0 +1,75 @@
+// Learn Graph Data Structure and DFS for minimum sorting for identical value
+
+const inputArr = [4, 7, 2, 1]
+// const sortArr = [4, 7, 2, 1]
+
+function minimumSwapToSort(inArr) {
+  let minSwap = 0;
+  const sortArrMap = {};
+  const lengthArrIn = inArr.length;
+  const sortArr = [...inArr].sort((a, b) => a - b);
+
+  for (let index = 0; index < lengthArrIn; index++) {
+    if (!sortArrMap[sortArr[index]]) {
+      sortArrMap[sortArr[index]] = index;
+    }
+  }
+
+  // create dataStructure Graph
+  const graphStorage = new Array(lengthArrIn).fill(null).map(() => []);
+  for (let index = 0; index < lengthArrIn; index++) {
+    const valueToMap = inArr[index];
+
+    if (sortArrMap[valueToMap] || sortArrMap[valueToMap] === 0) {
+      graphStorage[index].push(sortArrMap[valueToMap])
+    }
+  }
+  console.log(graphStorage)
+
+  // DFS Algorithm to find Cyclic Node in Graph
+  const visitedIndex = new Array(lengthArrIn).fill(false);
+  const inStack = new Array(lengthArrIn).fill(false);
+
+  function iterativeDFS(startNode, graph) {
+       let stack = [startNode];
+       let visited = new Array(graph.length).fill(false);
+       let counterCycle = 0;
+       
+       while (stack.length > 0) {
+           let node = stack.pop();
+           visited[node] = true;
+           
+           for (const neighborNode of graph[node]) {
+               if (!visited[neighborNode]) {
+                   stack.push(neighborNode);
+               } else {
+                   // console.log(node + " --- " + neighborNode)  
+                   if (neighborNode !== node) {
+                       // cycle found
+                       counterCycle += 1;
+                   }
+               }
+           }
+       }
+       // console.log(visited + " --- " + minSwap)  
+       return counterCycle;
+  }
+  
+  // counting minimum swap
+  for (let i=0; i < lengthArrIn; i++) {
+    minSwap = iterativeDFS(i, graphStorage) + minSwap;
+  }
+  
+  if (minSwap > 1) {
+      minSwap = minSwap - 1;
+  }
+
+  console.log(minSwap)
+  return minSwap;
+}
+
+function main() {
+  minimumSwapToSort(inputArr)
+}
+
+main();
