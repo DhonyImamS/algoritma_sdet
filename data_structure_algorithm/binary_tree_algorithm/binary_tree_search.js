@@ -12,20 +12,17 @@ class TreeNode {
 
 function insertionBST(nodeInserted, bSTree) {
     const lastTree = new TreeNode(nodeInserted);
-    // console.log(nodeInserted+" ============")
-    // console.log(bSTree)
+
     if (nodeInserted < bSTree.mainNode) {
-        // console.log(bSTree.leftNode)
+        
         if (bSTree.leftNode) {
-            // console.log("uhuy")
             bSTree.leftNode = insertionBST(nodeInserted, bSTree.leftNode)
         } else {
             bSTree.leftNode = lastTree;
         }
-    } else if (nodeInserted >= bSTree.mainNode) {
-        // console.log(bSTree.rightNode)
+    } else {
+
         if (bSTree.rightNode) {
-            // console.log("ihir")
             bSTree.rightNode = insertionBST(nodeInserted, bSTree.rightNode)
         } else {
             bSTree.rightNode = lastTree;
@@ -35,17 +32,32 @@ function insertionBST(nodeInserted, bSTree) {
     return bSTree;
 }
 
+function isNumberFoundUseDFS(root, target) {
+    if (!root) return false;
+    
+    if (root.mainNode === target) {
+        return true;
+    }
+    
+    if (target >= root.mainNode) {
+        return isNumberFoundUseDFS(root.rightNode, target);
+    } else {
+        return isNumberFoundUseDFS(root.leftNode, target);
+    }
+}
+
 
 function main() {
     const arrInput = [4, 2, 10, 5, 6];
     let firstTree = new TreeNode(arrInput[0]);
     
-    for (let i=1; i <= arrInput.length -  1; i++) {
+    for (let i=1; i < arrInput.length; i++) {
         // fungsi insert BST
-        firstTree = insertionBST(arrInput[i], firstTree)
+        firstTree = insertionBST(arrInput[i], firstTree);
     }
     
-    console.log(JSON.stringify(firstTree, null, 2))
+    console.log(JSON.stringify(firstTree, null, 2));
+    console.log(isNumberFoundUseDFS(firstTree, 10));
 }
 
 main();
