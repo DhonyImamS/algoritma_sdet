@@ -1,23 +1,16 @@
-/***
- * Create a reverse string function Example case : String : “Hello World” Output : “olleH dlroW”
-**/
+// Reverse String
 
-function scanBackwardString(inputString) {
-    const backwardStringArr = [];
-    const inputWord = inputString.split(' ');
+const input = 'ABCDEFGHIJ';
+
+function reverseStr(text) {
+    const arrText = text.split('');
+    let tempStr = '';
     
-    for (let idx = 0; idx < inputWord.length; idx++ ) {
-        const lengthInputString = inputWord[idx].split('').length;
-    
-        for (let index = lengthInputString - 1 ; index >= 0; index--) {
-            backwardStringArr.push(inputWord[idx][index]);
-        }
-        
-        backwardStringArr.push(' ')
+    for (const char of arrText) {
+        tempStr = char + tempStr;
     }
     
-    
-    console.log(backwardStringArr.join(''))
+    return tempStr;
 }
 
-scanBackwardString('Hello World')
+console.log(reverseStr(input));
