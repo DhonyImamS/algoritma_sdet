@@ -1,3 +1,5 @@
+// searching Palindrome in String
+
 /**
  * This is test for finding the longest palindrome on beginning of, middle of and end of text strings
  * hellomynameisannasmith
@@ -7,49 +9,62 @@
  * raceecar
  */
 
-function reverseArr(arrInput) {
-    let reverseArr = [...arrInput];
-    reverseArr.reverse();
+const wordInput = 'hellomynameisannasmith';
+
+function scanPalindrome(words, startIdx, endIdx) {
+    const texts = words.slice(startIdx, (endIdx + 1));
+    const isEven = texts.length % 2 === 0 ? true : false;
+    const medianIndex = isEven ? Math.floor((texts.length - 1) / 2) : Math.floor(texts.length / 2);
+    const maximumLoop = isEven ? medianIndex : medianIndex - 1;
     
-    return reverseArr;
+    
+    let isPalindrome = false;
+    let pointer1 = 0;
+    let pointer2 = texts.length - 1;
+    
+    for (let index = 0; index <= maximumLoop; index++) {
+        pointer1 = index;
+        pointer2 = pointer2 - index;
+        
+        if (texts[pointer1] === texts[pointer2]) {
+            isPalindrome = true;
+        } else {
+            isPalindrome = false;
+            break;
+        }
+    }
+    
+    if (isPalindrome) {
+        const result = {
+            len: texts.length,
+            word: texts.join('')
+        };
+        
+        console.log(result)
+        
+        return result;
+    }
+    
 }
 
-function findingLongestPalindrome(str) {
-    let result = {};
-    const arrStr = str.split('');
-    const lastIndex = arrStr.length - 1;
+function getLongestPalindrome(word) {
+    const textArr = word.split('');
+    const resultScan = {};
     
-    for (let index=0; index <= lastIndex; index++) {
-        let wordPalindrome = undefined;
-        let predictNextWord = undefined;
-        let predictNextWord2 = undefined;
+    // scan palindrome
+    for (let char = 0; char < textArr.length; char++) {
         
-        for(let pickerChar = index + 1; pickerChar <= lastIndex; pickerChar++) {
-            const endPick = pickerChar + 1;
-            let mergeArr;
+        for (let endChar = textArr.length - 1; endChar > char; endChar--) {
+            const res = scanPalindrome(textArr, char, endChar);
             
-            wordPalindrome = arrStr.slice(index, endPick);
-            predictNextWord = arrStr.slice(pickerChar, pickerChar + (endPick - index));
-            predictNextWord2 = arrStr.slice(pickerChar + 1, pickerChar + (endPick - index) + 1);
-            
-            // console.log(wordPalindrome, '=======', predictNextWord, '=========', predictNextWord2)
-            
-            if (wordPalindrome.length > 1 && wordPalindrome.join('') === reverseArr(predictNextWord).join('')) {
-                mergeArr = wordPalindrome.concat(predictNextWord.slice(1));
-                result[mergeArr.length] = mergeArr.join('');
-            } else if (wordPalindrome.length > 1 && wordPalindrome.join('') === reverseArr(predictNextWord2).join('')) {
-                mergeArr = wordPalindrome.concat(predictNextWord2);
-                result[mergeArr.length] = mergeArr.join('');
+            if (res) {
+                resultScan[res.len] = res.word;
             }
         }
-
     }
-
-    const arrayMaxLength = Math.max(...Object.keys(result));
-
-    console.log(result);
-
-    console.log(result[arrayMaxLength])
+    
+    console.log(resultScan)
+    
 }
 
-findingLongestPalindrome('hellomynameisannasmith')
+getLongestPalindrome(wordInput)
