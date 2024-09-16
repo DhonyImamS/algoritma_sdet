@@ -65,6 +65,25 @@ function cetakSegitigaNumberSimetric(banyakDicetak) {
 
 buatSegitigaAsterik(10);
 
+// Learn Pyramid asterik
+function createPyramidAsterix(lengthPyramid) {
+    
+    if (lengthPyramid % 2 === 0) throw Error('It can not created Pyramid - for this length');
+    const offset = 1;
+    const medianIndex = Math.floor((lengthPyramid - 1) / 2 );
+    
+    for (let idx = 0; idx + medianIndex < lengthPyramid; idx++) {
+        const lineArrayPerIdx = new Array(lengthPyramid).fill(' ');
+        
+        // fill asterix
+        lineArrayPerIdx.fill('*', medianIndex-idx, medianIndex+idx+offset);
+        
+        console.log(lineArrayPerIdx.join(''))
+    }
+}
+
+createPyramidAsterix(17)
+
 cetakSegitigaSimetris(10);
 
 cetakSegitigaNumberSimetric(10)
