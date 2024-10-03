@@ -10,20 +10,20 @@ class TreeNode {
     }
 }
 
-function insertionBST(nodeInserted, bSTree) {
+function insertionDataIntoTree(nodeInserted, bSTree) {
     const lastTree = new TreeNode(nodeInserted);
 
     if (nodeInserted < bSTree.mainNode) {
         
         if (bSTree.leftNode) {
-            bSTree.leftNode = insertionBST(nodeInserted, bSTree.leftNode)
+            bSTree.leftNode = insertionDataIntoTree(nodeInserted, bSTree.leftNode)
         } else {
             bSTree.leftNode = lastTree;
         }
     } else {
 
         if (bSTree.rightNode) {
-            bSTree.rightNode = insertionBST(nodeInserted, bSTree.rightNode)
+            bSTree.rightNode = insertionDataIntoTree(nodeInserted, bSTree.rightNode)
         } else {
             bSTree.rightNode = lastTree;
         }
@@ -53,7 +53,7 @@ function main() {
     
     for (let i=1; i < arrInput.length; i++) {
         // fungsi insert BST
-        firstTree = insertionBST(arrInput[i], firstTree);
+        firstTree = insertionDataIntoTree(arrInput[i], firstTree);
     }
     
     console.log(JSON.stringify(firstTree, null, 2));
