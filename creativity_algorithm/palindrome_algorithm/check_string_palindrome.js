@@ -1,3 +1,58 @@
+// Check String Palindrome V2
+
+// palindrome checking
+function palindromeDetection(inputString) {
+    const arrayInput = inputString.split('');
+    const medianIndex = Math.floor((arrayInput.length - 1) / 2);
+    
+    let arrayLeft;
+    let arrayRight;
+    let totalAttempt;
+    
+    // medianIndex Odd Even
+    if (arrayInput.length % 2 === 1) {
+        console.log("masuk sini")
+        arrayLeft = arrayInput.slice(0, medianIndex);
+        arrayRight = arrayInput.slice(medianIndex+1, arrayInput.length); 
+        
+        totalAttempt= medianIndex - 1;
+    } else if (arrayInput.length % 2 === 0) {
+        console.log("masuk sana")
+        arrayLeft = arrayInput.slice(0, medianIndex+1);
+        arrayRight = arrayInput.slice(medianIndex+1, arrayInput.length);
+        
+        totalAttempt= medianIndex;
+    }
+    
+    console.log(medianIndex)
+    
+    console.log(arrayLeft, '***', arrayRight)
+    
+    let pointerLeft = 0;
+    let pointerRight = (arrayRight.length) - 1;
+    let isPalindrome = false;
+    
+    for (let attempt = 0; attempt <= totalAttempt; attempt++) {
+        
+        pointerLeft = 0 + attempt;
+        pointerRight = ((arrayRight.length) - 1) - attempt;
+        
+        // console.log(arrayLeft[pointerLeft], '+++', arrayRight[pointerRight])
+        console.log(pointerLeft, '###', pointerRight)
+        
+        if (arrayLeft[pointerLeft] === arrayRight[pointerRight]) {
+            isPalindrome = true;
+        } else {
+            isPalindrome = false;
+        }
+    }
+    
+    console.log(isPalindrome)
+}
+
+palindromeDetection('AAAAA')
+
+
 // Check String Palindrome
 
 // const input='dANADE';
