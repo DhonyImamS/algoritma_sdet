@@ -45,6 +45,14 @@ function getKPK(inputArray) {
     }
     
     console.log(factorNumber)
+    
+    // process returning value
+    let result = 1;
+    for (const[key, value] of Object.entries(factorNumber)) {
+        result = result * (Math.pow(key, value))
+    }
+    
+    console.log(result);
 }
 
-getKPK([3, 5, 9])
+getKPK([3, 6, 9])
